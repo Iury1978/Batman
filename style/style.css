@@ -172,7 +172,7 @@ h1, h2, h3, p {
   margin: 0px;
   opacity: 0;
   cursor: pointer;
-  z-index: 3;
+  z-index: 600;
 }
 
 /* добавляем саму кнопку, которая будет  вкл-выкл звук
@@ -233,6 +233,7 @@ h1, h2, h3, p {
 
 .logo {
   animation: zoomIn 1s;
+  image-rendering: optimizeQuality;
 }
 
 @keyframes zoomIn {
@@ -266,11 +267,13 @@ h1, h2, h3, p {
 .footer__copyright {
   color: #6A6A6A;
 }
+
 .main_slider {
   height: calc(100% -100px);
   overflow: hidden;
   padding-bottom: 10px;
 }
+
 /* задаем высоту блока 100% на весь экран и иконки падают вниз экрана */
 .slider-main {
   height: 100%;
@@ -282,6 +285,7 @@ h1, h2, h3, p {
   align-items: center;
   justify-content: center;
 }
+
 /* абсолют потому что оно быдет выезжать- заезжать по кнопке
 bottom: 0; прижимаем его снизу 
 left: 0;
@@ -295,29 +299,54 @@ left: 0;
   left: 0;
   right: 0;
   padding-bottom: 15px;
-  background-color:  black;
+  background-color: black;
   min-height: 144px;
   padding-top: 12px;
+  /* убраем сначала меню пагинации */
+  transform: translateY(calc(100% - 25px));
+
+  transition: transform 0.5s ease-in-out;
 }
+
+.pagination_active {
+  transform: translateY(0);
+}
+
 /* создаем стрелочку */
-.pagination__arrow{
+.pagination__arrow {
   display: block;
   margin: 0 auto 20px;
   width: 0;
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid white;
+  background-color: transparent;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.pagination_active .pagination__arrow {
   border-bottom: 6px solid transparent;
   border-top: 6px solid white;
-  background-color: transparent;
-transition: border-color 0.3s ease-in-out ;
 }
+
 .pagination__arrow:hover {
+  border-bottom-color: #E90000;
+}
+
+.pagination_active .pagination__arrow:hover {
+  border-bottom-color: transparent;
   border-top-color: #E90000;
 }
+
 .slider-thumbs {
   max-width: 820px;
 }
+
+/* .slider-main__img {
+  object-fit: cover;
+} */
 /* задаем что бы занимал всего родителя, но из-за этого появляется боковой скролл,
 для решения проблемы надо выесть из 100% высоту хедера и футера в .main_slider/ допишем его
 без overflow: hidden; у меня не работало это */
@@ -327,6 +356,10 @@ transition: border-color 0.3s ease-in-out ;
   object-fit: cover;
 }
 
+/* .slider-thumbs__img {
+  max-height: 100px;
+  object-fit: cover;
+} */
 @media (max-width: 1024px) {
   .mute {
     right: 20px;
@@ -366,10 +399,10 @@ transition: border-color 0.3s ease-in-out ;
   .navigation {
     position: fixed;
     top: 0;
-    left: 0;
+    left: -240px;
     height: 556px;
     width: 240px;
-    transform: translateX(-240px);
+    transform: translateX(0);
     background: #260707;
     flex-direction: column;
     justify-content: flex-start;
@@ -383,7 +416,8 @@ transition: border-color 0.3s ease-in-out ;
   /* когда активно- возвращаем меню 
    выезжает по команде transition: transform 0.3s ease-in-out; */
   .navigation_active {
-    transform: translateX(0);
+    transform: translateX(240px);
+    z-index: 5;
   }
 
   .navigation__list {
@@ -460,9 +494,11 @@ margin-bottom: 40px; делаем отступ сниз до social */
     font-size: 6px;
     line-height: 7px;
   }
+
   .pagination__arrow {
     margin-bottom: 6px;
   }
+
   .pagination {
     min-height: 80px;
 
